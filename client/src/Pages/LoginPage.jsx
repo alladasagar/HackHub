@@ -1,40 +1,62 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../apis/auth"; // Import API function
+import { ToastContainer, toast } from 'react-toastify';
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login Data:", formData);
-  };
+
+    if (!formData.email || !formData.password) {
+        setError("Please fill in all required fields.");
+        return;
+    }
+
+    try {
+        const response = await login(formData); // Send login request
+        console.log(response); // Debugging
+
+        if (response.token) {
+            localStorage.setItem("token", response.token); // Store token
+            
+            if (response.role) { // ✅ Ensure role exists before checking
+                if (response.role === "manufacturer") {
+                    navigate("/manufacturerdashboard");
+                } else if (response.role === "logistics") {
+                    navigate("/logisticsdashboard");
+                } else {
+                    navigate("/userdashboard");
+                }
+            } else {
+                setError("Role not found in response.");
+            }
+        } else {
+            setError(response.message);
+        }
+    } catch (err) {
+        setError(err.response?.data?.message || "Login failed.");
+    }
+};
+
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center">
-      
-      {/* 🔹 Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center" 
-        style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1597931920019-df56bb8dd46e?auto=format&fit=crop&w=1920&q=80')"
-        }}
-      >
-        {/* 🔹 Overlay for better readability */}
+      <div className="absolute inset-0 bg-cover bg-center" 
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1597931920019-df56bb8dd46e?auto=format&fit=crop&w=1920&q=80')" }}>
         <div className="absolute inset-0 bg-blue-600 bg-opacity-50"></div>
       </div>
 
-      {/* 🔹 Login Card */}
       <div className="relative z-10 bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        
-        {/* 🔹 Logo & Heading */}
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
           Welcome Back!
         </h2>
-        
-        {/* 🔹 Login Form */}
+
+        {error && <p className="text-red-600 text-center">{error}</p>}
+
         <form onSubmit={handleSubmit} className="space-y-4">
-          
-          {/* Email Input */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Email</label>
             <input
@@ -46,7 +68,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Password Input */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Password</label>
             <input
@@ -58,16 +79,11 @@ const Login = () => {
             />
           </div>
 
-          {/* Login Button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300"
-          >
+          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">
             Login
           </button>
         </form>
 
-        {/* 🔹 Forgot Password & Signup Links */}
         <div className="text-center mt-4">
           <Link to="#" className="text-blue-600 hover:underline">
             Forgot Password?
@@ -80,6 +96,7 @@ const Login = () => {
           </Link>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
