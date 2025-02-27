@@ -1,20 +1,18 @@
-import { useState } from 'react'
-function App() {
-  const [count, setCount] = useState(0)
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./Pages/HomePage";
+import Login from "./Pages/LoginPage";
+import Signup from "./Pages/SignUp";
 
-  return (
-    <>
-     <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-      <div className="p-6 bg-gray-800 rounded-xl shadow-lg text-center">
-        <h1 className="text-4xl font-bold text-blue-400">Hello, Tailwind CSS! 🚀</h1>
-        <p className="mt-2 text-gray-300">React + Vite + Tailwind setup is working!</p>
-        <button className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg">
-          Click Me
-        </button>
-      </div>
-    </div>
-    </>
-  )
+function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Signup />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
-export default App
+export default App;
