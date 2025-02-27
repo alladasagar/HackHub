@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import Login from "./Pages/LoginPage";
 import Signup from "./Pages/SignUp";
+import UserDashboard from "./components/UserDashBoard";
+import ManufacturerDashboard from "./components/ManufacturerDashboard";
+import LogisticsDashboard from "./components/LogisticDashboard";
 
 function App() {
     return (
@@ -10,6 +13,9 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Signup />} />
+                <Route path="/userdashboard" element={<UserDashboard />} />
+                <Route path="/manufacturerdashboard" element={<ManufacturerDashboard />} />
+                <Route path="/logisticsdashboard" element={<LogisticsDashboard />} />
             </Routes>
         </BrowserRouter>
     );

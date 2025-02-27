@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
+
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -9,9 +10,7 @@ const Signup = () => {
     role: "user",
     company: "",
     address: { street: "", city: "", state: "", zipCode: "", country: "" },
-    phone: "",
-    licenseNumber: "",
-    vehicle: { type: "", licensePlate: "", capacity: "" }
+    phone: ""
   });
 
   // Handle Input Change
@@ -19,18 +18,23 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle Address & Vehicle Changes
-  const handleNestedChange = (e, field) => {
-    setFormData({
-      ...formData,
-      [field]: { ...formData[field], [e.target.name]: e.target.value }
-    });
-  };
-
   // Handle Form Submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Signup Data:", formData);
+    if(formdata.email === "" || formdata.password === "" || formdata.name === "" || formdata.phone === "" || formdata.company === "" ){
+      console.log("Please fill in all required fields.");
+    }
+    else{
+      const response = await Signup(formData);
+
+      if (response.status === 200) {
+        console.log("Signup successful!");
+      }
+      else {
+        console.log("Signup failed.");
+      }
+
+    }
   };
 
   return (
@@ -109,7 +113,6 @@ const Signup = () => {
               <option value="user">User</option>
               <option value="manufacturer">Manufacturer</option>
               <option value="logistics">Logistics Provider</option>
-              <option value="driver">Driver</option>
             </select>
           </div>
 
@@ -140,51 +143,6 @@ const Signup = () => {
               required
             />
           </div>
-
-          {/* Driver Fields */}
-          {formData.role === "driver" && (
-            <>
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">License Number</label>
-                <input
-                  type="text"
-                  name="licenseNumber"
-                  placeholder="Enter license number"
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Vehicle Type</label>
-                <select
-                  name="type"
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                  onChange={(e) => handleNestedChange(e, "vehicle")}
-                  required
-                >
-                  <option value="">Select Vehicle</option>
-                  <option value="truck">Truck</option>
-                  <option value="van">Van</option>
-                  <option value="car">Car</option>
-                  <option value="motorcycle">Motorcycle</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">License Plate</label>
-                <input
-                  type="text"
-                  name="licensePlate"
-                  placeholder="Enter license plate number"
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                  onChange={(e) => handleNestedChange(e, "vehicle")}
-                  required
-                />
-              </div>
-            </>
-          )}
 
           {/* Signup Button */}
           <button
