@@ -8,7 +8,7 @@ const ManufacturerDashboard = () => {
         <h2 className="text-2xl font-semibold mb-6">Manufacturer Dashboard</h2>
         <ul className="space-y-4">
           <li>
-            <Link to="/dashboard/products" className="block py-2 px-4 rounded hover:bg-green-500">Manage Products</Link>
+            <Link to="/manufacturerdashboard/products" className="block py-2 px-4 rounded hover:bg-green-500">Manage Products</Link>
           </li>
           <li>
             <Link to="/dashboard/orders" className="block py-2 px-4 rounded hover:bg-green-500">Order Requests</Link>

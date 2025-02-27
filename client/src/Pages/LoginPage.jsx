@@ -9,6 +9,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
 
     if (!formData.email || !formData.password) {
         setError("Please fill in all required fields.");
@@ -16,13 +17,12 @@ const Login = () => {
     }
 
     try {
-        const response = await login(formData); // Send login request
-        console.log(response); // Debugging
+        console.log(response); 
 
         if (response.token) {
-            localStorage.setItem("token", response.token); // Store token
+            localStorage.setItem("token", response.token); 
             
-            if (response.role) { // ✅ Ensure role exists before checking
+            if (response.role) { 
                 if (response.role === "manufacturer") {
                     navigate("/manufacturerdashboard");
                 } else if (response.role === "logistics") {
@@ -45,7 +45,7 @@ const Login = () => {
   return (
     <div className="relative w-full h-screen flex items-center justify-center">
       <div className="absolute inset-0 bg-cover bg-center" 
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1597931920019-df56bb8dd46e?auto=format&fit=crop&w=1920&q=80')" }}>
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80')" }}>
         <div className="absolute inset-0 bg-blue-600 bg-opacity-50"></div>
       </div>
 

@@ -50,6 +50,7 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log("Incoming login data:", req.body);
         console.log("Login request:", req.body);
 
         if (!email || !password) {
@@ -77,7 +78,8 @@ router.post("/login", async (req, res) => {
         res.status(200).json({ 
             message: "Login successful!", 
             token, 
-            role: user.role 
+            role: user.role ,
+            userId: user._id 
         });
     } catch (error) {
         console.error("Login Error:", error);

@@ -7,6 +7,7 @@ export const login = async (userData) => {
     console.log(userData);
   try {
     const response = await axios.post(`${BASE_URL}/login`, userData);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     throw error;

@@ -5,6 +5,7 @@ import Signup from "./Pages/SignUp";
 import UserDashboard from "./components/UserDashBoard";
 import ManufacturerDashboard from "./components/ManufacturerDashboard";
 import LogisticsDashboard from "./components/LogisticDashboard";
+import ManageProducts from "./components/ManageProducts";
 
 function App() {
     return (
@@ -16,6 +17,9 @@ function App() {
                 <Route path="/userdashboard" element={<UserDashboard />} />
                 <Route path="/manufacturerdashboard" element={<ManufacturerDashboard />} />
                 <Route path="/logisticsdashboard" element={<LogisticsDashboard />} />
+                <Route path="/manufacturerdashboard/*" element={<ManufacturerDashboard />}>
+                    <Route path="products" element={<ManageProducts />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );

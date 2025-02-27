@@ -49,7 +49,7 @@ const Signup = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center" 
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1597931920019-df56bb8dd46e?auto=format&fit=crop&w=1920&q=80')"
+          backgroundImage: "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80')"
         }}
       >
         <div className="absolute inset-0 bg-blue-600 bg-opacity-50"></div>
